@@ -1,0 +1,33 @@
+server:
+  port: 8765
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+      leaseRenewalIntervalInSeconds: 1
+      leaseExpirationDurationInSeconds: 2
+zuul:
+  #Service will be mapped under the /api URI
+  prefix: /api
+#  Uncomment to disable auto-registering all services read from Eureka
+#  ignoredServices: '*'
+  routes:
+    student-service:
+      path: /student/**
+      serviceId: STUDENT-SERVICE
+
+spring:
+  application:
+    name: zuul-server
+
+ribbon:
+  eureka:
+    enabled: false
+
+STUDENT-SERVICE:
+  ribbon:
+    listOfServers: http://localhost:9090/
+
+
